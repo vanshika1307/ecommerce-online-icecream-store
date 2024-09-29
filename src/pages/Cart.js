@@ -1,35 +1,52 @@
-import React from 'react';
-import { Container, Typography, Paper, Box, Button, Divider } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-function Cart({ cart = [] }) {
+function Cart() {
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    const savedCart = localStorage.getItem("cart");
+    if (savedCart) {
+      setCart(JSON.parse(savedCart));
+    }
+  }, []);
+
   const total = cart.reduce((sum, item) => sum + item.price, 0);
 
   return (
-    <Container component="main" sx={{ py: 8 }}>
-      <Typography variant="h3" color="primary" gutterBottom>Your Cart</Typography>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold text-pink-800 mb-6">Your Cart</h1>
       {cart.length === 0 ? (
-        <Typography variant="body1" color="textSecondary">Your cart is empty.</Typography>
+        <p className="text-gray-600">Your cart is empty.</p>
       ) : (
-        <Paper elevation={3} sx={{ p: 4 }}>
+        <div className="bg-white rounded-lg shadow-md p-6">
           {cart.map((item, index) => (
-            <Box key={index} display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-              <Typography variant="body1" color="textPrimary">{item.name}</Typography>
-              <Typography variant="body1" color="textSecondary">${item.price.toFixed(2)}</Typography>
-            </Box>
+            <div key={index} className="flex justify-between items-center mb-4">
+              <span className="text-pink-800">{item.name}</span>
+              <span className="text-pink-700">${item.price.toFixed(2)}</span>
+            </div>
           ))}
-          <Divider sx={{ my: 2 }} />
-          <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h6" color="primary">Total:</Typography>
-            <Typography variant="h6" color="primary">${total.toFixed(2)}</Typography>
-          </Box>
-          <Box mt={4}>
-            <Button variant="contained" color="primary" component={Link} to="/checkout">Proceed to Checkout</Button>
-          </Box>
-        </Paper>
+          <div className="border-t pt-4 mt-4">
+            <div className="flex justify-between items-center">
+              <span className="text-xl font-semibold text-pink-800">
+                Total:
+              </span>
+              <span className="text-xl font-semibold text-pink-800">
+                ${total.toFixed(2)}
+              </span>
+            </div>
+          </div>
+          <div className="mt-6">
+            <Link
+              to="/checkout"
+              className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition-colors"
+            >
+              Proceed to Checkout
+            </Link>
+          </div>
+        </div>
       )}
-    </Container>
+    </div>
   );
 }
 
