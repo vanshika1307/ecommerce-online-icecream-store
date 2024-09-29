@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import IceCreamAnimation from "./IceCreamAnimation";
+
 import { Link } from "react-router-dom";
 const initialIceCreams = [
   {
@@ -61,30 +64,36 @@ function Menu() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-pink-800 mb-6">
-        Our Ice Cream Menu
-      </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {initialIceCreams.map((iceCream) => (
-          <div key={iceCream.id} className="bg-white rounded-lg shadow-md p-6">
-            <img
-              src={iceCream.image}
-              alt={iceCream.name}
-              className="w-full h-48 object-cover rounded-md mb-4"
-            />
-            <h2 className="text-xl font-semibold text-pink-800 mb-2">
-              {iceCream.name}
-            </h2>
-            <p className="text-pink-700 mb-4">${iceCream.price.toFixed(2)}</p>
-            <button
-              onClick={() => addToCart(iceCream)}
-              className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition-colors"
+    <div className="relative min-h-screen">
+      <IceCreamAnimation />
+      <div className="container mx-auto px-4 py-8 relative z-10">
+        <h1 className="text-3xl font-bold text-pink-800 mb-6">
+          Our Ice Cream Menu
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {initialIceCreams.map((iceCream) => (
+            <div
+              key={iceCream.id}
+              className="bg-white rounded-lg shadow-md p-6"
             >
-              Add to Cart
-            </button>
-          </div>
-        ))}
+              <img
+                src={iceCream.image}
+                alt={iceCream.name}
+                className="w-full h-48 object-cover rounded-md mb-4"
+              />
+              <h2 className="text-xl font-semibold text-pink-800 mb-2">
+                {iceCream.name}
+              </h2>
+              <p className="text-pink-700 mb-4">${iceCream.price.toFixed(2)}</p>
+              <button
+                onClick={() => addToCart(iceCream)}
+                className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition-colors"
+              >
+                Add to Cart
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
       <div className="mt-8">
         <Link
