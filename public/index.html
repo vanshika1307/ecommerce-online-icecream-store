@@ -5,104 +5,208 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
+    <meta name="description" content="Web site created using create-react-app" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>Frozen-Bites</title>
     <style>
+      /* General Styling */
+      body {
+        font-family: 'Segoe UI', 'Roboto', sans-serif;
+        background-color: #f0f2f5;
+        margin: 0;
+        padding: 0;
+      }
+
       #chatbot-icon {
         position: fixed;
-        bottom: 20px;
-        right: 20px;
+        bottom: 30px;
+        right: 30px;
         width: 60px;
         height: 60px;
         border-radius: 50%;
-        background-color: #007bff;
+        background: linear-gradient(135deg, #4CAF50, #2196F3);
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
+
       #chatbot-icon img {
-        width: 30px;
-        height: 30px;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
       }
+
+      #chatbot-icon:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      }
+
       #chatbot-window {
         position: fixed;
-        bottom: 90px;
-        right: 20px;
-        width: 300px;
-        height: 400px;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        background: white;
-        padding: 10px;
+        bottom: 110px;
+        right: 30px;
+        width: 350px;
+        height: 500px;
+        border: none;
+        border-radius: 20px;
+        background: #fff;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        padding: 15px;
         display: none;
         flex-direction: column;
         justify-content: space-between;
+        animation: slideUp 0.5s ease forwards;
       }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(100px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
       #chatbot-messages {
-        height: 300px;
+        height: 400px;
         overflow-y: auto;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 15px;
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
       }
+
       #chatbot-input {
-        width: calc(100% - 60px);
-        padding: 5px;
+        width: calc(100% - 70px);
+        padding: 12px 15px;
+        border-radius: 25px;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        font-size: 16px;
+        transition: border-color 0.3s ease;
       }
+
+      #chatbot-input:focus {
+        outline: none;
+        border-color: #2196F3;
+      }
+
       #chatbot-send {
         width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #2196F3;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #chatbot-send:hover {
+        background-color: #1976D2;
+      }
+
+      #chatbot-send svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      /* Style for user and bot messages */
+      .user-message, .bot-message {
+        margin: 10px 0;
+        padding: 10px 15px;
+        border-radius: 18px;
+        max-width: 80%;
+        word-wrap: break-word;
+      }
+
+      .user-message {
+        background-color: #2196F3;
+        color: white;
+        align-self: flex-end;
+        margin-left: auto;
+      }
+
+      .bot-message {
+        background-color: #f0f0f0;
+        align-self: flex-start;
+        margin-right: auto;
+      }
+
+      /* Scrollbar styling */
+      #chatbot-messages::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      #chatbot-messages::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
       }
     </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
 
     <!-- Chatbot Icon -->
     <div id="chatbot-icon">
-      <img src="https://static.vecteezy.com/system/resources/thumbnails/007/225/199/small/robot-chat-bot-concept-illustration-vector.jpg" style="border-radius: 50%; width: 60px; height: 60px;" alt="Chatbot Icon" />
+      <img src="https://static.vecteezy.com/system/resources/thumbnails/007/225/199/small/robot-chat-bot-concept-illustration-vector.jpg" alt="Chatbot Icon" />
     </div>
 
     <!-- Chatbot Window -->
     <div id="chatbot-window">
       <div id="chatbot-messages"></div>
-      <div>
+      <div style="display: flex; align-items: center; gap: 10px;">
         <input type="text" id="chatbot-input" placeholder="Type a message..." />
-        <button id="chatbot-send">Send</button>
+        <button id="chatbot-send">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
       </div>
     </div>
 
     <script>
+      // Toggle chatbot window
       document.getElementById('chatbot-icon').addEventListener('click', () => {
         const chatbotWindow = document.getElementById('chatbot-window');
         chatbotWindow.style.display = chatbotWindow.style.display === 'none' ? 'flex' : 'none';
       });
 
-      document.getElementById('chatbot-send').addEventListener('click', async () => {
+      // Handle sending message
+      document.getElementById('chatbot-send').addEventListener('click', sendMessage);
+      document.getElementById('chatbot-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          sendMessage();
+        }
+      });
+
+      async function sendMessage() {
         const input = document.getElementById('chatbot-input');
-        const message = input.value;
+        const message = input.value.trim();
+        if (!message) return;
+        
         input.value = '';
 
         const messages = document.getElementById('chatbot-messages');
         const userMessage = document.createElement('div');
-        userMessage.textContent = `You: ${message}`;
+        userMessage.classList.add('user-message');
+        userMessage.textContent = message;
         messages.appendChild(userMessage);
+
+        // Scroll to bottom of messages
+        messages.scrollTop = messages.scrollHeight;
 
         try {
           const response = await fetch('http://localhost:5000/chat', {
@@ -119,15 +223,20 @@
 
           const data = await response.json();
           const botMessage = document.createElement('div');
-          botMessage.textContent = `Bot: ${data.reply}`;
+          botMessage.classList.add('bot-message');
+          botMessage.textContent = data.reply;
           messages.appendChild(botMessage);
+
+          // Scroll to bottom of messages
+          messages.scrollTop = messages.scrollHeight;
         } catch (error) {
           console.error('Failed to fetch:', error);
           const errorMessage = document.createElement('div');
+          errorMessage.classList.add('bot-message');
           errorMessage.textContent = 'Error: Failed to fetch response from server.';
           messages.appendChild(errorMessage);
         }
-      });
+      }
     </script>
   </body>
 </html>
