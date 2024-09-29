@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 const initialIceCreams = [
   {
     id: 1,
@@ -45,10 +44,8 @@ const initialIceCreams = [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQBC4mj0K58XYOg0dPt0_QzDlFrKhNWUhJrQ&s",
   },
 ];
-
 function Menu() {
   const [cart, setCart] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
@@ -61,7 +58,6 @@ function Menu() {
     const updatedCart = [...cart, iceCream];
     setCart(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
-    navigate("/cart");
   };
 
   return (
@@ -89,6 +85,14 @@ function Menu() {
             </button>
           </div>
         ))}
+      </div>
+      <div className="mt-8">
+        <Link
+          to="/cart"
+          className="bg-pink-500 text-white px-6 py-3 rounded-lg hover:bg-pink-600 transition-colors"
+        >
+          Go to Cart ({cart.length} items)
+        </Link>
       </div>
     </div>
   );
