@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import IceCreamAnimation from "./IceCreamAnimation";
 
-import { Link } from "react-router-dom";
 const initialIceCreams = [
   {
     id: 1,
@@ -46,6 +46,7 @@ const initialIceCreams = [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQBC4mj0K58XYOg0dPt0_QzDlFrKhNWUhJrQ&s",
   },
 ];
+
 function Menu() {
   const [cart, setCart] = useState([]);
 
@@ -63,44 +64,44 @@ function Menu() {
   };
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen bg-gradient-to-r from-[#ffcb70] to-[#ff7070] overflow-hidden">
       <IceCreamAnimation />
       <div className="container mx-auto px-4 py-8 relative z-10">
-        <h1 className="text-3xl font-bold text-pink-800 mb-6">
+        <h1 className="text-4xl font-bold text-[#8B4513] mb-8 text-center drop-shadow-lg">
           Our Ice Cream Menu
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {initialIceCreams.map((iceCream) => (
             <div
               key={iceCream.id}
-              className="bg-white rounded-lg shadow-md p-6"
+              className="bg-white/85 backdrop-blur-sm rounded-lg shadow-lg p-6 transform hover:scale-105 transition-transform duration-300"
             >
               <img
                 src={iceCream.image}
                 alt={iceCream.name}
                 className="w-full h-48 object-cover rounded-md mb-4"
               />
-              <h2 className="text-xl font-semibold text-pink-800 mb-2">
+              <h2 className="text-xl font-semibold text-[#8B4513] mb-2">
                 {iceCream.name}
               </h2>
-              <p className="text-pink-700 mb-4">${iceCream.price.toFixed(2)}</p>
+              <p className="text-[#4A2511] mb-4">${iceCream.price.toFixed(2)}</p>
               <button
                 onClick={() => addToCart(iceCream)}
-                className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition-colors"
+                className="bg-[#D2691E] text-white px-4 py-2 rounded hover:bg-[#C7611A] transition-colors w-full"
               >
                 Add to Cart
               </button>
             </div>
           ))}
         </div>
-      </div>
-      <div className="mt-8">
-        <Link
-          to="/cart"
-          className="bg-pink-500 text-white px-6 py-3 rounded-lg hover:bg-pink-600 transition-colors"
-        >
-          Go to Cart ({cart.length} items)
-        </Link>
+        <div className="mt-8 text-center">
+          <Link
+            to="/cart"
+            className="inline-block bg-[#D2691E] text-white px-6 py-3 rounded-lg hover:bg-[#C7611A] transition-colors"
+          >
+            Go to Cart ({cart.length} items)
+          </Link>
+        </div>
       </div>
     </div>
   );
