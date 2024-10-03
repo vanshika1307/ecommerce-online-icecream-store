@@ -4,10 +4,6 @@ from transformers import pipeline
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS
-
-# Load pre-trained model and tokenizer
-chatbot = pipeline('text-generation', model='microsoft/DialoGPT-medium')
-
 # Predefined set of questions and answers
 predefined_responses = {
     "hello": "Hi there! How can I help you today?",

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Checkout() {
   const navigate = useNavigate();
@@ -11,16 +12,39 @@ function Checkout() {
     country: ''
   });
 
+  // Handle input changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  // Handle form submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you would typically process the order and send data to your backend
-    console.log('Order submitted:', formData);
+  
+    // Get cart from localStorage
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  
+    // Prepare the order data
+    const orderData = { ...formData, iceCreams: cart };
+  
+    try {
+      // Submit order data to backend
+      await axios.post('http://localhost:5000/orders/add', orderData);
+  
+      console.log('Order submitted:', orderData);
+  
+      // Clear cart from localStorage
+      localStorage.removeItem('cart');
+    } catch (err) {
+      console.error('Error submitting order:', err);
+      // Optionally show an alert or message to the user
+      alert('Error submitting order, but proceeding to payment page.');
+    }
+  
+    // Navigate to payment page regardless of the Axios request outcome
     navigate('/payment');
   };
+  
 
   return (
     <div className="container mx-auto px-4 py-8">
