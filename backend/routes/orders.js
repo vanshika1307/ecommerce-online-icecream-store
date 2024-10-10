@@ -4,6 +4,8 @@ const Order = require('../models/Order');
 
 // Create a new order
 router.post('/add', async (req, res) => {
+  console.log("reacher server..");
+  
   const { fullName, address, city, zipCode, country, iceCreams } = req.body;
 
   const newOrder = new Order({
@@ -19,7 +21,7 @@ router.post('/add', async (req, res) => {
     const savedOrder = await newOrder.save();
     res.status(201).json(savedOrder);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(400).json({ message: err.message, test : true });
   }
 });
 

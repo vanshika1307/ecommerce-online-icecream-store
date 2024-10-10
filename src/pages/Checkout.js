@@ -29,14 +29,14 @@ function Checkout() {
   
     try {
       // Submit order data to backend
-      await axios.post('http://localhost:5000/orders/add', orderData);
+      await axios.post('http://localhost:8080/orders/add', orderData);
   
       console.log('Order submitted:', orderData);
   
       // Clear cart from localStorage
       localStorage.removeItem('cart');
     } catch (err) {
-      console.error('Error submitting order:', err);
+      console.error('Error submitting order:', err.message);
       // Optionally show an alert or message to the user
       alert('Error submitting order, but proceeding to payment page.');
     }
